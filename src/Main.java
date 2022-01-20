@@ -26,25 +26,27 @@ public class Main {
         System.out.println("1. encryption/decryption");
         System.out.println("2. cryptanalysis");
         System.out.println("3. exit");
-        int number = scanner.nextInt();
+        int number = Integer.parseInt(scanner.nextLine());
         while(true){
             if(number==1){
                 System.out.println("Сhoose encryption/decription");
                 System.out.println("1. encryption");
                 System.out.println("2. decryption");
                 System.out.println("3. back");
-                int encryptionMode = scanner.nextInt();
+                int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
-//                    System.out.println("enter to path to a file");
-//                    String pathToFile = scanner.next();
-                    Path path = Paths.get("C:\\Users\\Sanal\\Documents\\CodeCezar\\src\\text.txt");
-                    Path encFile = Paths.get("C:\\Users\\Sanal\\Documents\\CodeCezar\\src\\enc.txt");
+                    System.out.println("Enter Key: ");
+                    int key = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter path to a file: ");
+                    String pathToFile = scanner.nextLine();
+                    Path path = Paths.get(pathToFile);
+                    Path encFile = Paths.get("C:\\курсы\\курсы stepick\\CodeCezar2\\src\\enc.txt");
                     List<String> list = null;
                     List<String> encriptionList = null;
                     if(Files.exists(path)){
                         try {
                             list = Files.readAllLines(path);
-                            encriptionList =  codeCezar.encryption(list,2,alphabet);
+                            encriptionList =  codeCezar.encryption(list,key,alphabet);
                             StringBuilder sb =new StringBuilder();
                             for(String str : encriptionList){
                                 sb.append(str).append("\\n");
@@ -53,10 +55,40 @@ public class Main {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                    }else{
+                        System.out.println("Can't find the file");
+                        continue;
                     }
                     encryptionMode = 3;
+                    System.out.println("Success encryption");
+                    System.out.println();
                 }else if(encryptionMode == 2){
-                    //List<String> dencriptionList =  codeCezar.decryption(list,2,alphabet);
+                    System.out.println("Enter Key: ");
+                    int key = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter path to a file: ");
+                    String pathToFile = scanner.nextLine();
+                    Path path = Paths.get(pathToFile);
+                    Path encFile = Paths.get("C:\\курсы\\курсы stepick\\CodeCezar2\\src\\dec.txt");
+                    List<String> list = null;
+                    List<String> decriptionList = null;
+                    if(Files.exists(path)){
+                        try {
+                            list = Files.readAllLines(path);
+                            decriptionList =  codeCezar.decryption(list,key,alphabet);
+                            StringBuilder sb =new StringBuilder();
+                            for(String str : decriptionList){
+                                sb.append(str).append("\\r\\n");
+                            }
+                            Files.write(encFile,sb.toString().getBytes());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        continue;
+                    }
+                    encryptionMode = 3;
+                    System.out.println("Success decryption");
+                    System.out.println();
                 }else if(encryptionMode == 3){
                     number = 4;
                     continue;
@@ -71,7 +103,7 @@ public class Main {
                 System.out.println("1. brute_force");
                 System.out.println("2. cryptanalysis");
                 System.out.println("3. back");
-                int encryptionMode = scanner.nextInt();
+                int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
 
                 }else if(encryptionMode == 2){
@@ -92,13 +124,13 @@ public class Main {
                 System.out.println("1. encryption/decryption");
                 System.out.println("2. cryptanalysis");
                 System.out.println("3. exit");
-                number = scanner.nextInt();
+                number = Integer.parseInt(scanner.nextLine());
             }else{
                 System.out.println("Wrong number, please choose mode");
                 System.out.println("1. encryption/decription");
                 System.out.println("2. cryptanalysis");
                 System.out.println("3. exit");
-                number = scanner.nextInt();
+                number = Integer.parseInt(scanner.nextLine());
             }
 
         }
