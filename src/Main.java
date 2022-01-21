@@ -20,6 +20,7 @@ public class Main {
 
     public static void main(String[] args){
         CodeCezar codeCezar = new CodeCezar();
+        Cryptanalysis cryptanalysis = new Cryptanalysis();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Сhoose modу, enter number");
@@ -84,6 +85,7 @@ public class Main {
                             e.printStackTrace();
                         }
                     }else{
+                        System.out.println("Can't find the file");
                         continue;
                     }
                     encryptionMode = 3;
@@ -105,7 +107,33 @@ public class Main {
                 System.out.println("3. back");
                 int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
-
+                    System.out.println("Enter path to a file: ");
+                    String pathToFile = scanner.nextLine();
+                    Path path = Paths.get(pathToFile);
+                    Path encFile = Paths.get("C:\\Users\\Sanal\\Documents\\CodeCezar\\src\\bruteforce.txt");
+                    List<String> list = null;
+                    if(Files.exists(path)){
+                        try {
+                            list = Files.readAllLines(path);
+                            cryptanalysis.bruteForce(list,alphabet);
+                            System.out.println("Enter Key: ");
+                            int key = Integer.parseInt(scanner.nextLine());
+                            List<String> decriptionList = codeCezar.decryption(list,key,alphabet);
+                            StringBuilder sb =new StringBuilder();
+                            for(String str : decriptionList){
+                                sb.append(str).append("\\r\\n");
+                            }
+                            Files.write(encFile,sb.toString().getBytes());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        System.out.println("Can't find the file");
+                        continue;
+                    }
+                    encryptionMode = 3;
+                    System.out.println("Success decryption");
+                    System.out.println();
                 }else if(encryptionMode == 2){
 
                 }else if(encryptionMode == 3){
