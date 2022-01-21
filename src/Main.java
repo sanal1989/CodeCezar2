@@ -19,10 +19,12 @@ public class Main {
                        '.',',',':','-','!','?',' '};
 
     public static void main(String[] args){
+        //инициализация омновных переменных
         CodeCezar codeCezar = new CodeCezar();
         Cryptanalysis cryptanalysis = new Cryptanalysis();
         Scanner scanner = new Scanner(System.in);
 
+        //меню выбора
         System.out.println("Сhoose modу, enter number");
         System.out.println("1. encryption/decryption");
         System.out.println("2. cryptanalysis");
@@ -36,21 +38,36 @@ public class Main {
                 System.out.println("3. back");
                 int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
+
+                    //вводим ключ и путь до файла
                     System.out.println("Enter Key: ");
                     int key = Integer.parseInt(scanner.nextLine());
                     System.out.println("Enter path to a file: ");
                     String pathToFile = scanner.nextLine();
                     Path path = Paths.get(pathToFile);
-                    Path encFile = Paths.get("C:\\курсы\\курсы stepick\\CodeCezar2\\src\\enc.txt");
+
+                    //создаю файл для зашифрованного текста
+                    Path encFile = Paths.get("C:\\CodeCezar\\enc.txt");
                     List<String> list = null;
                     List<String> encriptionList = null;
+                    // проверяю фуществования переданного файла
                     if(Files.exists(path)){
                         try {
+                            if(!Files.exists(encFile)){
+                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
+                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
+                                }
+                                Files.createFile(encFile);
+                            }
                             list = Files.readAllLines(path);
+
+                            //защифровываю текст
                             encriptionList =  codeCezar.encryption(list,key,alphabet);
+
+                            //записываю защифрованный текст в строку, потом записываю строку в файл
                             StringBuilder sb =new StringBuilder();
                             for(String str : encriptionList){
-                                sb.append(str).append("\\n");
+                                sb.append(str).append('\n');
                             }
                             Files.write(encFile,sb.toString().getBytes());
                         } catch (IOException e) {
@@ -64,23 +81,37 @@ public class Main {
                     System.out.println("Success encryption");
                     System.out.println();
                 }else if(encryptionMode == 2){
+
+                    //вводим ключ и путь до файла
                     System.out.println("Enter Key: ");
                     int key = Integer.parseInt(scanner.nextLine());
                     System.out.println("Enter path to a file: ");
                     String pathToFile = scanner.nextLine();
                     Path path = Paths.get(pathToFile);
-                    Path encFile = Paths.get("C:\\курсы\\курсы stepick\\CodeCezar2\\src\\dec.txt");
+
+                    //создаю файл для рашифрованного текста
+                    Path decFile = Paths.get("C:\\CodeCezar\\dec.txt");
                     List<String> list = null;
                     List<String> decriptionList = null;
                     if(Files.exists(path)){
                         try {
+                            if(!Files.exists(decFile)){
+                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
+                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
+                                }
+                                Files.createFile(decFile);
+                            }
                             list = Files.readAllLines(path);
+
+                            //расщифровываю текст
                             decriptionList =  codeCezar.decryption(list,key,alphabet);
+
+                            //записываю защифрованный текст в строку, потом записываю строку в файл
                             StringBuilder sb =new StringBuilder();
                             for(String str : decriptionList){
-                                sb.append(str).append("\\r\\n");
+                                sb.append(str).append('\n');
                             }
-                            Files.write(encFile,sb.toString().getBytes());
+                            Files.write(decFile,sb.toString().getBytes());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -107,23 +138,38 @@ public class Main {
                 System.out.println("3. back");
                 int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
+
+                    //ввожу путь до файла
                     System.out.println("Enter path to a file: ");
                     String pathToFile = scanner.nextLine();
                     Path path = Paths.get(pathToFile);
-                    Path encFile = Paths.get("C:\\Users\\Sanal\\Documents\\CodeCezar\\src\\bruteforce.txt");
+
+                    //создаю файл для рашифрованного текста
+                    Path decFile = Paths.get("C:\\CodeCezar\\bruteforce.txt");
                     List<String> list = null;
                     if(Files.exists(path)){
                         try {
+                            if(!Files.exists(decFile)){
+                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
+                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
+                                }
+                                Files.createFile(decFile);
+                            }
                             list = Files.readAllLines(path);
+
+                            //алгорит brute force перебор алфавита
+                            //выводит первую не пустую строку в консоль со сдвигом в один символ использую алфавит
                             cryptanalysis.bruteForce(list,alphabet);
+
+                            //после вывода в консоль всех значений ключа, выбираем подходящий ключ и расшифровываем текст
                             System.out.println("Enter Key: ");
                             int key = Integer.parseInt(scanner.nextLine());
                             List<String> decriptionList = codeCezar.decryption(list,key,alphabet);
                             StringBuilder sb =new StringBuilder();
                             for(String str : decriptionList){
-                                sb.append(str).append("\\r\\n");
+                                sb.append(str).append('\n');
                             }
-                            Files.write(encFile,sb.toString().getBytes());
+                            Files.write(decFile,sb.toString().getBytes());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
