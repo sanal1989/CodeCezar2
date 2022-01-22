@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -40,6 +41,7 @@ public class Main {
                 if(encryptionMode == 1){
 
                     //вводим ключ и путь до файла
+                    System.out.println("Key must be between 1 and "+ (alphabet.length-1));
                     System.out.println("Enter Key: ");
                     int key = Integer.parseInt(scanner.nextLine());
                     System.out.println("Enter path to a file: ");
@@ -83,6 +85,7 @@ public class Main {
                 }else if(encryptionMode == 2){
 
                     //вводим ключ и путь до файла
+                    System.out.println("Key must be between 1 and "+ (alphabet.length-1));
                     System.out.println("Enter Key: ");
                     int key = Integer.parseInt(scanner.nextLine());
                     System.out.println("Enter path to a file: ");
@@ -159,6 +162,7 @@ public class Main {
 
                             //алгорит brute force перебор алфавита
                             //выводит первую не пустую строку в консоль со сдвигом в один символ использую алфавит
+                            System.out.println("brute forse will be work between 1 and "+ (alphabet.length-1));
                             cryptanalysis.bruteForce(list,alphabet);
 
                             //после вывода в консоль всех значений ключа, выбираем подходящий ключ и расшифровываем текст
@@ -181,7 +185,50 @@ public class Main {
                     System.out.println("Success decryption");
                     System.out.println();
                 }else if(encryptionMode == 2){
+                    System.out.println("Enter path to a first file for cryptanalysis: ");
+                    String firstFile = scanner.nextLine();
+                    Path firstPath = Paths.get(firstFile);
 
+                    System.out.println("Enter path to a second file for decryption: ");
+                    String secondToFile = scanner.nextLine();
+                    Path secondPath = Paths.get(secondToFile);
+
+                    Path cryptoFile = Paths.get("C:\\CodeCezar\\crypto.txt");
+                    Map<Character, Double> firstMap = null;
+                    Map<Character, Double> secondMap = null;
+                    List<String> firstList = null;
+                    List<String> secondList = null;
+
+                    if(Files.exists(firstPath)){
+                        try {
+                            if(!Files.exists(cryptoFile)){
+                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
+                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
+                                }
+                                Files.createFile(cryptoFile);
+                            }
+                            if(Files.exists(secondPath)){
+                                firstList = Files.readAllLines(firstPath);
+                                secondList = Files.readAllLines(secondPath);
+                            }else{
+                                System.out.println("Can't find the second file");
+                                continue;
+                            }
+                            firstMap = cryptanalysis.cryptanalusisFile(firstList);
+                            secondMap = cryptanalysis.cryptanalusisFile(secondList);
+                            //расщифровываю текст
+
+
+                            //записываю защифрованный текст в строку, потом записываю строку в файл
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        System.out.println("Can't find the first file");
+                        continue;
+                    }
                 }else if(encryptionMode == 3){
                     number = 4;
                     continue;
