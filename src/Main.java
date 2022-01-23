@@ -24,7 +24,6 @@ public class Main {
         CodeCezar codeCezar = new CodeCezar();
         Cryptanalysis cryptanalysis = new Cryptanalysis();
         Scanner scanner = new Scanner(System.in);
-
         //меню выбора
         System.out.println("Сhoose modу, enter number");
         System.out.println("1. encryption/decryption");
@@ -214,11 +213,14 @@ public class Main {
                                 System.out.println("Can't find the second file");
                                 continue;
                             }
-                            firstMap = cryptanalysis.cryptanalusisFile(firstList);
-                            secondMap = cryptanalysis.cryptanalusisFile(secondList);
+                            System.out.println("cryptanalysis first file");
+                            firstMap = cryptanalysis.cryptanalusisFile(firstList,alphabet);
+                            System.out.println("cryptanalysis first file");
+                            secondMap = cryptanalysis.cryptanalusisFile(secondList,alphabet);
                             //расщифровываю текст
-
-
+                            String decryptionString = cryptanalysis.cryptanalusisMap(firstMap,secondMap,secondList);
+                            //System.out.print(decryptionString);
+                            Files.write(cryptoFile,decryptionString.getBytes());
                             //записываю защифрованный текст в строку, потом записываю строку в файл
 
 
