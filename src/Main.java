@@ -215,7 +215,7 @@ public class Main {
                             }
                             System.out.println("cryptanalysis first file");
                             firstMap = cryptanalysis.cryptanalusisFile(firstList,alphabet);
-                            System.out.println("cryptanalysis first file");
+                            System.out.println("cryptanalysis second file");
                             secondMap = cryptanalysis.cryptanalusisFile(secondList,alphabet);
                             //расщифровываю текст
                             String decryptionString = cryptanalysis.cryptanalusisMap(firstMap,secondMap,secondList);

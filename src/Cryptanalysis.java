@@ -66,7 +66,7 @@ public class Cryptanalysis {
         for(String str :list){
             sb.append(str);
         }
-        String result = sb.toString();
+        //String result = sb.toString();
 
         List<Map.Entry<Character,Double>> listMap = new ArrayList(first.entrySet());
         Collections.sort(listMap, new Comparator<Map.Entry<Character, Double>>() {
@@ -105,11 +105,25 @@ public class Cryptanalysis {
 //        }
         Iterator<Map.Entry<Character,Double>> iteratorF = resultFirst.entrySet().iterator();
         Iterator<Map.Entry<Character,Double>> iteratorS = resultSecond.entrySet().iterator();
+        Map<Character,Character> mapCharacter = new HashMap<>();
         while(iteratorF.hasNext() && iteratorS.hasNext()){
             Map.Entry<Character,Double> f = iteratorF.next();
             Map.Entry<Character,Double> s = iteratorS.next();
             System.out.println(s.getKey()+":"+s.getValue()+"-->"+f.getKey()+":"+f.getValue());
-            result=result.replace(s.getKey(), f.getKey());
+            mapCharacter.put(s.getKey(),f.getKey());
+//            result=result.replace(f.getKey(),'*');
+//            result=result.replace(s.getKey(), f.getKey());
+//            result=result.replace('*',f.getKey());
+        }
+        StringBuilder sbFinish = new StringBuilder();
+        for(int i=0;i<sb.length();i++){
+            if(mapCharacter.containsKey(sb.charAt(i))){
+                //System.out.println(sb.charAt(i)+"-->"+mapCharacter.get(sb.charAt(i)));
+                sbFinish.append(mapCharacter.get(sb.charAt(i)));
+            }else{
+                sbFinish.append(sb.charAt(i));
+            }
+
         }
 //
 //        for(Map.Entry<Character,Double> f:first.entrySet()){
@@ -122,6 +136,6 @@ public class Cryptanalysis {
 //                }
 //            }
 //        }
-        return result;
+        return sbFinish.toString();
     }
 }
