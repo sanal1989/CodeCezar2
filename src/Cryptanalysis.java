@@ -19,10 +19,10 @@ public class Cryptanalysis {
                 isSuccess = true;
                 break;
             }
-            System.out.println(countDecription);
+            //System.out.println(countDecription);
             countDecription =0;
         }
-        System.out.println(lengthText + " " + bruteForceKey);
+        //System.out.println(lengthText + " " + bruteForceKey);
         if(isSuccess){
             System.out.println("файл успешно расшифрован: "+bruteForceKey);
         }else{
