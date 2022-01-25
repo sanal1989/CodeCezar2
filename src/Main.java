@@ -23,30 +23,30 @@ public class Main {
         Cryptanalysis cryptanalysis = new Cryptanalysis();
         Scanner scanner = new Scanner(System.in);
         //меню выбора
-        System.out.println("Сhoose modу, enter number");
-        System.out.println("1. encryption/decryption");
-        System.out.println("2. cryptanalysis");
-        System.out.println("3. exit");
+        System.out.println("Выберите режим работы программы: ");
+        System.out.println("1. шифрование/дешифровка");
+        System.out.println("2. криптоанализ");
+        System.out.println("3. выход");
         int number = Integer.parseInt(scanner.nextLine());
         while(true){
             if(number==1){
-                System.out.println("Сhoose encryption/decription");
-                System.out.println("1. encryption");
-                System.out.println("2. decryption");
-                System.out.println("3. back");
+                System.out.println("Выберите режим шифрование/дешифровка");
+                System.out.println("1. шифрование");
+                System.out.println("2. дешифровка");
+                System.out.println("3. назад");
                 int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
 
                     //вводим ключ и путь до файла
-                    System.out.println("Key must be between 1 and "+ (alphabet.length-1));
-                    System.out.println("Enter Key: ");
+                    System.out.println("Введите ключ от 1 до "+ (alphabet.length-1));
+                    System.out.println("Введите ключ: ");
                     int key = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Enter path to a file: ");
+                    System.out.println("Введите путь к файлу: ");
                     String pathToFile = scanner.nextLine();
                     Path path = Paths.get(pathToFile);
 
                     //создаю файл для зашифрованного текста
-                    System.out.println("Enter path to save the file: ");
+                    System.out.println("Введите путь для сохранения файла: ");
                     String pathToSave = scanner.nextLine();
                     Path encFile = Paths.get(pathToSave);
                     List<String> list = null;
@@ -72,24 +72,24 @@ public class Main {
                             e.printStackTrace();
                         }
                     }else{
-                        System.out.println("Can't find the file");
+                        System.out.println("Файл не найден");
                         continue;
                     }
                     encryptionMode = 3;
-                    System.out.println("Success encryption");
+                    System.out.println("файл успешно зашифрован");
                     System.out.println();
                 }else if(encryptionMode == 2){
 
                     //вводим ключ и путь до файла
-                    System.out.println("Key must be between 1 and "+ (alphabet.length-1));
-                    System.out.println("Enter Key: ");
+                    System.out.println("Введите ключ от 1 до "+ (alphabet.length-1));
+                    System.out.println("Введите ключ: ");
                     int key = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Enter path to a file: ");
+                    System.out.println("Введите путь к файлу: ");
                     String pathToFile = scanner.nextLine();
                     Path path = Paths.get(pathToFile);
 
                     //создаю файл для рашифрованного текста
-                    System.out.println("Enter path to save the file: ");
+                    System.out.println("Введите путь для сохранения файла: ");
                     String pathToSave = scanner.nextLine();
                     Path decFile = Paths.get(pathToSave);
                     List<String> list = null;
@@ -114,36 +114,36 @@ public class Main {
                             e.printStackTrace();
                         }
                     }else{
-                        System.out.println("Can't find the file");
+                        System.out.println("Файл не найден");
                         continue;
                     }
                     encryptionMode = 3;
-                    System.out.println("Success decryption");
+                    System.out.println("файл успешно дешифрован");
                     System.out.println();
                 }else if(encryptionMode == 3){
                     number = 4;
                     continue;
                 }else {
-                    System.out.println("Wrong number, please choose mode");
-                    System.out.println("1. encryption");
-                    System.out.println("2. decryption");
-                    System.out.println("3. back");
+                    System.out.println("Выберите режим шифрование/дешифровка");
+                    System.out.println("1. шифрование");
+                    System.out.println("2. дешифровка");
+                    System.out.println("3. назад");
                 }
             }else if(number==2){
-                System.out.println("Сhoose brute_force/cryptanalysis");
+                System.out.println("Выберите режим brute_force/криптоанализ");
                 System.out.println("1. brute_force");
-                System.out.println("2. cryptanalysis");
-                System.out.println("3. back");
+                System.out.println("2. криптоанализ");
+                System.out.println("3. назад");
                 int encryptionMode = Integer.parseInt(scanner.nextLine());
                 if(encryptionMode == 1){
 
                     //ввожу путь до файла
-                    System.out.println("Enter path to a file: ");
+                    System.out.println("Введите путь к файлу: ");
                     String pathToFile = scanner.nextLine();
                     Path path = Paths.get(pathToFile);
 
                     //создаю файл для рашифрованного текста
-                    System.out.println("Enter path to save the file: ");
+                    System.out.println("Введите путь для сохранения файла: ");
                     String pathToSave = scanner.nextLine();
                     Path decFile = Paths.get(pathToSave);
                     List<String> list = null;
@@ -169,22 +169,22 @@ public class Main {
                             e.printStackTrace();
                         }
                     }else{
-                        System.out.println("Can't find the file");
+                        System.out.println("Файл не найден");
                         continue;
                     }
                     encryptionMode = 3;
-                    System.out.println("Success decryption");
+
                     System.out.println();
                 }else if(encryptionMode == 2){
-                    System.out.println("Enter path to a first file for cryptanalysis: ");
+                    System.out.println("Введите путь к файлу для криптоанализа");
                     String fileForCryptanalysis = scanner.nextLine();
                     Path pathForAnalysis = Paths.get(fileForCryptanalysis);
 
-                    System.out.println("Enter path to a second file for decryption: ");
+                    System.out.println("Введите путь к защифрованному файлу");
                     String fileFordecryption = scanner.nextLine();
                     Path pathForDecr = Paths.get(fileFordecryption);
 
-                    System.out.println("Enter path to save the file: ");
+                    System.out.println("Введите путь для сохранения файла: ");
                     String pathToSave = scanner.nextLine();
                     Path cryptoFile = Paths.get(pathToSave);
                     Map<Character, Double> mapCryptanalysis = null;
@@ -201,12 +201,12 @@ public class Main {
                                 listCryptanalysis = Files.readAllLines(pathForAnalysis);
                                 listDecryption = Files.readAllLines(pathForDecr);
                             }else{
-                                System.out.println("Can't find the second file");
+                                System.out.println("Файл не найден");
                                 continue;
                             }
-                            System.out.println("cryptanalysis file");
+                            System.out.println("Частотный анализ текста для криптоанализа");
                             mapCryptanalysis = cryptanalysis.cryptanalusisFile(listCryptanalysis,alphabet);
-                            System.out.println("cryptanalysis decryption file");
+                            System.out.println("Частотный анализ зашифрованного текста");
                             mapDecryption = cryptanalysis.cryptanalusisFile(listDecryption,alphabet);
                             //расщифровываю текст
                             String decryptionString = cryptanalysis.cryptanalusisMap(mapCryptanalysis,mapDecryption,listDecryption);
@@ -219,44 +219,34 @@ public class Main {
                             e.printStackTrace();
                         }
                     }else{
-                        System.out.println("Can't find the first file");
+                        System.out.println("Файл не найден");
                         continue;
                     }
                 }else if(encryptionMode == 3){
                     number = 4;
                     continue;
                 }else {
-                    System.out.println("Wrong number, please choose mode");
+                    System.out.println("Выберите режим brute_force/криптоанализ");
                     System.out.println("1. brute_force");
-                    System.out.println("2. cryptanalysis");
-                    System.out.println("3. back");
+                    System.out.println("2. криптоанализ");
+                    System.out.println("3. назад");
                 }
             }else if(number == 3) {
                 break;
             }else if(number == 4) {
-                System.out.println("Сhoose modу, enter number");
-                System.out.println("1. encryption/decryption");
-                System.out.println("2. cryptanalysis");
-                System.out.println("3. exit");
+                System.out.println("Выберите режим работы программы: ");
+                System.out.println("1. шифрование/дешифровка");
+                System.out.println("2. криптоанализ");
+                System.out.println("3. выход");
                 number = Integer.parseInt(scanner.nextLine());
             }else{
-                System.out.println("Wrong number, please choose mode");
-                System.out.println("1. encryption/decription");
-                System.out.println("2. cryptanalysis");
-                System.out.println("3. exit");
+                System.out.println("Выберите режим работы программы: ");
+                System.out.println("1. шифрование/дешифровка");
+                System.out.println("2. криптоанализ");
+                System.out.println("3. выход");
                 number = Integer.parseInt(scanner.nextLine());
             }
 
         }
-
-
-
-
-
-
-
-
-
-
     }
 }

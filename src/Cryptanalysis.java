@@ -4,18 +4,29 @@ public class Cryptanalysis {
     public int bruteForce(List<String> list, char[] alphabet, CodeCezar codeCezar){
         int countDecription = 0;
         int bruteForceKey = 0;
+        int lengthText =0;
+        boolean isSuccess =false;
         for(int k=0;k<alphabet.length;k++){
             List<String> listDescyption = codeCezar.decryption(list,k,alphabet);
             for(String str : listDescyption){
                 int space = str.split(",\\s").length;
+                lengthText+=str.length();
                 countDecription+=space;
 
             }
-            if(countDecription>10000){
+            if(countDecription>5000){
                 bruteForceKey = k;
+                isSuccess = true;
                 break;
             }
+            System.out.println(countDecription);
             countDecription =0;
+        }
+        System.out.println(lengthText + " " + bruteForceKey);
+        if(isSuccess){
+            System.out.println("файл успешно расшифрован: "+bruteForceKey);
+        }else{
+            System.out.println("файл не расштфрован");
         }
         //System.out.println("key bruteforce: " + bruteForceKey);
         return bruteForceKey;
