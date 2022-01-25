@@ -48,16 +48,15 @@ public class Main {
                     Path path = Paths.get(pathToFile);
 
                     //создаю файл для зашифрованного текста
-                    Path encFile = Paths.get("C:\\CodeCezar\\enc.txt");
+                    System.out.println("Enter path to save the file: ");
+                    String pathToSave = scanner.nextLine();
+                    Path encFile = Paths.get(pathToSave);
                     List<String> list = null;
                     List<String> encriptionList = null;
                     // проверяю фуществования переданного файла
                     if(Files.exists(path)){
                         try {
                             if(!Files.exists(encFile)){
-                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
-                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
-                                }
                                 Files.createFile(encFile);
                             }
                             list = Files.readAllLines(path);
@@ -92,15 +91,14 @@ public class Main {
                     Path path = Paths.get(pathToFile);
 
                     //создаю файл для рашифрованного текста
-                    Path decFile = Paths.get("C:\\CodeCezar\\dec.txt");
+                    System.out.println("Enter path to save the file: ");
+                    String pathToSave = scanner.nextLine();
+                    Path decFile = Paths.get(pathToSave);
                     List<String> list = null;
                     List<String> decriptionList = null;
                     if(Files.exists(path)){
                         try {
                             if(!Files.exists(decFile)){
-                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
-                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
-                                }
                                 Files.createFile(decFile);
                             }
                             list = Files.readAllLines(path);
@@ -147,14 +145,13 @@ public class Main {
                     Path path = Paths.get(pathToFile);
 
                     //создаю файл для рашифрованного текста
-                    Path decFile = Paths.get("C:\\CodeCezar\\bruteforce.txt");
+                    System.out.println("Enter path to save the file: ");
+                    String pathToSave = scanner.nextLine();
+                    Path decFile = Paths.get(pathToSave);
                     List<String> list = null;
                     if(Files.exists(path)){
                         try {
                             if(!Files.exists(decFile)){
-                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
-                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
-                                }
                                 Files.createFile(decFile);
                             }
                             list = Files.readAllLines(path);
@@ -185,40 +182,39 @@ public class Main {
                     System.out.println();
                 }else if(encryptionMode == 2){
                     System.out.println("Enter path to a first file for cryptanalysis: ");
-                    String firstFile = scanner.nextLine();
-                    Path firstPath = Paths.get(firstFile);
+                    String fileForCryptanalysis = scanner.nextLine();
+                    Path pathForAnalysis = Paths.get(fileForCryptanalysis);
 
                     System.out.println("Enter path to a second file for decryption: ");
-                    String secondToFile = scanner.nextLine();
-                    Path secondPath = Paths.get(secondToFile);
+                    String fileFordecryption = scanner.nextLine();
+                    Path pathForDecr = Paths.get(fileFordecryption);
 
-                    Path cryptoFile = Paths.get("C:\\CodeCezar\\crypto.txt");
-                    Map<Character, Double> firstMap = null;
-                    Map<Character, Double> secondMap = null;
-                    List<String> firstList = null;
-                    List<String> secondList = null;
+                    System.out.println("Enter path to save the file: ");
+                    String pathToSave = scanner.nextLine();
+                    Path cryptoFile = Paths.get(pathToSave);
+                    Map<Character, Double> mapCryptanalysis = null;
+                    Map<Character, Double> mapDecryption = null;
+                    List<String> listCryptanalysis = null;
+                    List<String> listDecryption = null;
 
-                    if(Files.exists(firstPath)){
+                    if(Files.exists(pathForAnalysis)){
                         try {
                             if(!Files.exists(cryptoFile)){
-                                if(!Files.exists(Paths.get("C:\\CodeCezar"))){
-                                    Files.createDirectory(Paths.get("C:\\CodeCezar"));
-                                }
                                 Files.createFile(cryptoFile);
                             }
-                            if(Files.exists(secondPath)){
-                                firstList = Files.readAllLines(firstPath);
-                                secondList = Files.readAllLines(secondPath);
+                            if(Files.exists(pathForDecr)){
+                                listCryptanalysis = Files.readAllLines(pathForAnalysis);
+                                listDecryption = Files.readAllLines(pathForDecr);
                             }else{
                                 System.out.println("Can't find the second file");
                                 continue;
                             }
-                            System.out.println("cryptanalysis first file");
-                            firstMap = cryptanalysis.cryptanalusisFile(firstList,alphabet);
-                            System.out.println("cryptanalysis second file");
-                            secondMap = cryptanalysis.cryptanalusisFile(secondList,alphabet);
+                            System.out.println("cryptanalysis file");
+                            mapCryptanalysis = cryptanalysis.cryptanalusisFile(listCryptanalysis,alphabet);
+                            System.out.println("cryptanalysis decryption file");
+                            mapDecryption = cryptanalysis.cryptanalusisFile(listDecryption,alphabet);
                             //расщифровываю текст
-                            String decryptionString = cryptanalysis.cryptanalusisMap(firstMap,secondMap,secondList);
+                            String decryptionString = cryptanalysis.cryptanalusisMap(mapCryptanalysis,mapDecryption,listDecryption);
                             //System.out.print(decryptionString);
                             Files.write(cryptoFile,decryptionString.getBytes());
                             //записываю защифрованный текст в строку, потом записываю строку в файл
