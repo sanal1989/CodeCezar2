@@ -1,9 +1,7 @@
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -157,14 +155,11 @@ public class Main {
                             list = Files.readAllLines(path);
 
                             //алгорит brute force перебор алфавита
-                            //выводит первую не пустую строку в консоль со сдвигом в один символ использую алфавит
-                            System.out.println("brute forse will be work between 1 and "+ (alphabet.length-1));
-                            cryptanalysis.bruteForce(list,alphabet);
 
-                            //после вывода в консоль всех значений ключа, выбираем подходящий ключ и расшифровываем текст
-                            System.out.println("Enter Key: ");
-                            int key = Integer.parseInt(scanner.nextLine());
-                            List<String> decriptionList = codeCezar.decryption(list,key,alphabet);
+                            //System.out.println("Key for brute force will be work between 1 and "+ (alphabet.length-1));
+                            int bruteForseKey = cryptanalysis.bruteForce(list,alphabet,codeCezar);
+
+                            List<String> decriptionList = codeCezar.decryption(list,bruteForseKey,alphabet);
                             StringBuilder sb =new StringBuilder();
                             for(String str : decriptionList){
                                 sb.append(str).append('\n');

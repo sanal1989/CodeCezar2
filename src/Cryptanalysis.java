@@ -1,31 +1,24 @@
 import java.util.*;
 
 public class Cryptanalysis {
-    public void bruteForce(List<String> list, char[] alphabet){
+    public int bruteForce(List<String> list, char[] alphabet, CodeCezar codeCezar){
+        int countDecription = 0;
+        int bruteForceKey = 0;
         for(int k=0;k<alphabet.length;k++){
-            List<String> result = new ArrayList<>();
-            char[] ar = null;
-            for(String str : list){
-                if(!str.trim().equals("")){
-                    ar = str.toCharArray();
-                    break;
-                }
+            List<String> listDescyption = codeCezar.decryption(list,k,alphabet);
+            for(String str : listDescyption){
+                int space = str.split(",\\s").length;
+                countDecription+=space;
+
             }
-            for(int i = 0; i< ar.length; i++) {
-                for (int j = 0; j < alphabet.length; j++) {
-                    if (ar[i] == alphabet[j]) {
-                        if (j - k < 0) {
-                            ar[i] = alphabet[alphabet.length - (k - j)];
-                            break;
-                        } else {
-                            ar[i] = alphabet[j - k];
-                            break;
-                        }
-                    }
-                }
+            if(countDecription>10000){
+                bruteForceKey = k;
+                break;
             }
-            System.out.println("Key value:" + k + " Example of decryption :" + String.valueOf(ar));
+            countDecription =0;
         }
+        //System.out.println("key bruteforce: " + bruteForceKey);
+        return bruteForceKey;
     }
     public Map<Character,Double> cryptanalusisFile(List<String> firstFile, char[] ar){
         Map<Character,Double> map = new HashMap<>();
@@ -61,14 +54,14 @@ public class Cryptanalysis {
         return  map;
     }
 
-    public String cryptanalusisMap(Map<Character,Double> first,Map<Character,Double> second, List<String> list){
+    public String cryptanalusisMap(Map<Character,Double> mapCryptanalysis,Map<Character,Double> mapDecryption, List<String> list){
         StringBuilder sb = new StringBuilder();
         for(String str :list){
             sb.append(str);
         }
         //String result = sb.toString();
 
-        List<Map.Entry<Character,Double>> listMap = new ArrayList(first.entrySet());
+        List<Map.Entry<Character,Double>> listMap = new ArrayList(mapCryptanalysis.entrySet());
         Collections.sort(listMap, new Comparator<Map.Entry<Character, Double>>() {
             @Override
             public int compare(Map.Entry<Character, Double> a, Map.Entry<Character, Double> b) {
@@ -77,12 +70,12 @@ public class Cryptanalysis {
                 return -1;
             }
         });
-        Map<Character,Double> resultFirst = new LinkedHashMap<>();
+        Map<Character,Double> mapSortedCryptanalysy = new LinkedHashMap<>();
         for(Map.Entry<Character,Double> entry:listMap){
-            resultFirst.put(entry.getKey(),entry.getValue());
+            mapSortedCryptanalysy.put(entry.getKey(),entry.getValue());
         }
 
-        List<Map.Entry<Character,Double>> listMap2 = new ArrayList(second.entrySet());
+        List<Map.Entry<Character,Double>> listMap2 = new ArrayList(mapDecryption.entrySet());
         Collections.sort(listMap2, new Comparator<Map.Entry<Character, Double>>() {
             @Override
             public int compare(Map.Entry<Character, Double> a, Map.Entry<Character, Double> b) {
@@ -92,23 +85,23 @@ public class Cryptanalysis {
             }
         });
 
-        Map<Character,Double> resultSecond = new LinkedHashMap<>();
+        Map<Character,Double> mapSortedDecryption = new LinkedHashMap<>();
         for(Map.Entry<Character,Double> entry:listMap2){
-            resultSecond.put(entry.getKey(),entry.getValue());
+            mapSortedDecryption.put(entry.getKey(),entry.getValue());
         }
-//        for(Map.Entry<Character,Double> f:resultFirst.entrySet()){
+//        for(Map.Entry<Character,Double> f:mapSortedCryptanalysy.entrySet()){
 //            System.out.println(f.getKey() + "    " + f.getValue());
 //        }
 //        System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
-//        for(Map.Entry<Character,Double> f:resultSecond.entrySet()){
+//        for(Map.Entry<Character,Double> f:mapSortedDecryption.entrySet()){
 //            System.out.println(f.getKey() + "    " + f.getValue());
 //        }
-        Iterator<Map.Entry<Character,Double>> iteratorF = resultFirst.entrySet().iterator();
-        Iterator<Map.Entry<Character,Double>> iteratorS = resultSecond.entrySet().iterator();
+        Iterator<Map.Entry<Character,Double>> iteratorCrypta = mapSortedCryptanalysy.entrySet().iterator();
+        Iterator<Map.Entry<Character,Double>> iteratorDecryp = mapSortedDecryption.entrySet().iterator();
         Map<Character,Character> mapCharacter = new HashMap<>();
-        while(iteratorF.hasNext() && iteratorS.hasNext()){
-            Map.Entry<Character,Double> f = iteratorF.next();
-            Map.Entry<Character,Double> s = iteratorS.next();
+        while(iteratorCrypta.hasNext() && iteratorDecryp.hasNext()){
+            Map.Entry<Character,Double> f = iteratorCrypta.next();
+            Map.Entry<Character,Double> s = iteratorDecryp.next();
             System.out.println(s.getKey()+":"+s.getValue()+"-->"+f.getKey()+":"+f.getValue());
             mapCharacter.put(s.getKey(),f.getKey());
 //            result=result.replace(f.getKey(),'*');
