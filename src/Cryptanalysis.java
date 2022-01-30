@@ -38,25 +38,19 @@ public class Cryptanalysis {
         for(String str : firstFile){
             sb.append(str);
         }
-        for(int i=0;i<sb.length();i++){
-            boolean inAlphabet = false;
-            for(int a = 0; a<ar.length;a++){
-                if(ar[a] == sb.charAt(i)){
-                    inAlphabet = true;
-                    break;
-                }
-
+        for(int i=0;i<ar.length;i++){
+//            boolean inAlphabet = false;
+//            for(int a = 0; a<ar.length;a++){
+//                if(ar[a] == sb.charAt(i)){
+//                    inAlphabet = true;
+//                    break;
+//                }
+//            }
+            double count = 0;
+            for(int j=0;j<sb.length();j++){
+                if(ar[i] == sb.charAt(j)) count++;
             }
-            if(!map.containsKey(sb.charAt(i))){
-                double count = 1;
-                for(int j=i+1;j<sb.length();j++){
-                    if(sb.charAt(i) == sb.charAt(j)) count++;
-                }
-                if(inAlphabet){
-                    map.put(sb.charAt(i),count/sb.length());
-                }
-
-            }
+            map.put(ar[i],count/sb.length());
         }
         for(Map.Entry<Character, Double> i :map.entrySet()){
             System.out.println( i.getKey() + " = " + i.getValue());
